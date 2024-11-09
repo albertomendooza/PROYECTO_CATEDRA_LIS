@@ -2,7 +2,13 @@
 
 use App\Http\Controllers\PageController;
 
+// Ruta principal
 Route::get('/', [PageController::class, 'home'])->name('home');
+
+
+use App\Http\Controllers\AuthController;
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
 
 /*
