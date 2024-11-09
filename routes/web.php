@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+
+Route::get('/', [PageController::class, 'home'])->name('home');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +15,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
