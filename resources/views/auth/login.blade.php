@@ -26,16 +26,17 @@
                     </div>
                 @endif
 
+                <!-- Formulario de inicio de sesión -->
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
-                    <!-- Email -->
+                    <!-- Campo de correo electrónico -->
                     <div class="form-group mb-3">
                         <label for="email" class="text-dark">Correo Electrónico</label>
                         <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required autofocus>
                     </div>
 
-                    <!-- Contraseña -->
+                    <!-- Campo de contraseña -->
                     <div class="form-group mb-3">
                         <label for="password" class="text-dark">Contraseña</label>
                         <input type="password" name="password" id="password" class="form-control" required>
@@ -47,9 +48,12 @@
                         <label class="form-check-label text-dark" for="remember">Recordarme</label>
                     </div>
 
-                    <div class="d-flex justify-content-between">
+                    <!-- Botones de envío y enlace de recuperación de contraseña -->
+                    <div class="d-flex justify-content-between align-items-center">
                         @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-decoration-none text-secondary">¿Olvidaste tu contraseña?</a>
+                            <a href="{{ route('password.request') }}" class="text-decoration-none text-secondary">
+                                ¿Olvidaste tu contraseña?
+                            </a>
                         @endif
                         <button type="submit" class="btn btn-dark">Iniciar Sesión</button>
                     </div>

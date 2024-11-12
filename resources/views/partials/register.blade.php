@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('partials.app')
 
 @section('content')
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
@@ -29,12 +29,6 @@
                         <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required autofocus>
                     </div>
 
-                    <!-- Campo de correo electrónico -->
-                    <div class="form-group mb-3">
-                        <label for="email" class="text-dark">Correo Electrónico</label>
-                        <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
-                    </div>
-
                     <!-- Campo de contraseña -->
                     <div class="form-group mb-3">
                         <label for="password" class="text-dark">Contraseña</label>
@@ -52,8 +46,8 @@
                         <label for="role" class="text-dark">Rol</label>
                         <select name="role" id="role" class="form-control" required>
                             <option value="admin">Administrador</option>
-                            <option value="user">Usuario</option>
-                            <option value="guest">Invitado</option>
+                            <option value="user">Cliente</option>
+                            <option value="guest">Empresa</option>
                         </select>
                     </div>
 
