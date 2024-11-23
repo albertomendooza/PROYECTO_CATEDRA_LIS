@@ -15,27 +15,32 @@ class RegisterController extends Controller
         return view('auth.register'); 
     }
 
-    // Maneja el registro del usuario
     public function register(Request $request)
-    {
-        // Validación de los datos de entrada
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|string',
-        ]);
+{
+    // Validar los datos del formulario
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:6|confirmed',
+        'role' => 'required|in:cliente,empresa,admin',
+    ]);
 
-        // Crear nuevo usuario
-        $user = new User();
-        $user->name = $request->name;
-        $user->password = Hash::make($request->password); 
-        $user->role = $request->role;
-        $user->is_active = 1; // Valor predeterminado para 'is_active'
-        $user->created_at = Carbon::now()->format('Y-m-d H:i:s');
-        $user->updated_at = $user->created_at; 
+    // Determinar el estado de aprobación según el rol
+    $approved = $request->role === 'empresa' ? 0 : 1;
 
-        $user->save();
+    // Crear el usuario
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role,
+        'is_active' => 0,
+        'approved' => $approved, // Establecemos la aprobación
+    ]);
 
-        return redirect()->route('dashboard')->with('status', 'Usuario registrado exitosamente');
-    }
+    // Redirigir al inicio con un mensaje de éxito
+    return redirect()->route('login')->with('status', 'Usuario registrado exitosamente');
+}
+
+
 }

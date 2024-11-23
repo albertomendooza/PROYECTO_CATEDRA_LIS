@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     // Redirige a 'dashboard' después de un inicio de sesión exitoso
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/';
 
     public function showLoginForm()
     {
