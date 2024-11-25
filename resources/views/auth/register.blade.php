@@ -47,18 +47,15 @@
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
                     </div>
 
-                    <!-- Campo de rol (lista desplegable) -->
-                    <div class="form-group mb-3">
-                        <label for="role" class="text-dark">Rol</label>
-                        <select name="role" id="role" class="form-control" required>
-                            <option value="admin">Administrador</option>
-                            <option value="user">Usuario</option>
-                            <option value="guest">Invitado</option>
-                        </select>
-                    </div>
-
-                    <!-- Campo de is_active (oculto y por defecto 1) -->
-                    <input type="hidden" name="is_active" value="1">
+                   <!-- Campo de rol (lista desplegable) -->
+<div class="form-group mb-3">
+    <label for="role" class="text-dark">Rol</label>
+    <select name="role" id="role" class="form-control" required>
+        <option value="cliente">Cliente</option> <!-- Usuario corresponde a cliente -->
+        <option value="empresa">Empresa</option> <!-- Empresa se mantiene igual -->
+        <option value="admin">Administrador</option> <!-- Administrador se mantiene igual -->
+    </select>
+</div>
 
                     <!-- Botón de registro -->
                     <div class="d-flex justify-content-center">

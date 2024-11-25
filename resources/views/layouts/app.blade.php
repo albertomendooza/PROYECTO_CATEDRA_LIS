@@ -11,15 +11,15 @@
 </head>
 <body>
     <!-- Header -->
-    @include('partials.header')
+    @include('partials.header') <!-- Aquí se incluye el encabezado -->
 
     <!-- Main Content -->
     <div class="container">
-        @yield('content')
+        @yield('content') <!-- Aquí se renderiza el contenido de las vistas -->
     </div>
 
     <!-- Footer -->
-    @include('partials.footer')
+    @include('partials.footer') <!-- Pie de página -->
 
     <!-- Bootstrap JS -->
     <script src="{{ asset('template/js/bootstrap.bundle.min.js') }}"></script>

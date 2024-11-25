@@ -21,16 +21,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'is_active',
+        'approved', 
     ];
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password',         // Oculta la contraseña
+        'remember_token',   // Oculta el token de sesión
     ];
 
     /**
@@ -39,6 +42,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime', // Maneja fechas para email verificado
+        'is_active' => 'boolean',          // Convierte is_active a booleano
     ];
 }
