@@ -20,6 +20,7 @@
                     <!-- Opciones para administradores -->
                     @if(auth()->user()->role === 'admin')
                         <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.register') }}">Registrar Usuarios</a></li>
                     @endif
 
                     <!-- Opciones para empresas -->
@@ -29,14 +30,14 @@
 
                     <!-- Opciones para clientes -->
                     @if(auth()->user()->role === 'cliente')
-                        <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li> <!-- Si no hay controlador, puedes actualizar esto luego -->
+                        <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li> <!-- Actualiza con la ruta correcta cuando esté disponible -->
                     @endif
 
                     <!-- Enlace para cerrar sesión (visible para todos los roles autenticados) -->
                     <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
-                            <button type="submit" class="nav-link btn btn-link text-white" style="text-decoration: none;">
+                            <button type="submit" class="nav-link btn btn-link text-info" style="text-decoration: none;">
                                 Cerrar Sesión
                             </button>
                         </form>

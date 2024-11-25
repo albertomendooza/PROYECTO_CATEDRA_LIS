@@ -21,11 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
-        'is_active',
-        'approved', 
+        'role',        // Rol del usuario (cliente, empresa, admin)
+        'is_active',   // Estado de activación
+        'approved',    // Aprobación de usuarios
     ];
-    
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -44,5 +44,38 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime', // Maneja fechas para email verificado
         'is_active' => 'boolean',          // Convierte is_active a booleano
+        'approved' => 'boolean',           // Convierte approved a booleano
     ];
+
+    /**
+     * Scope to filter users by role.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $role
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByRole($query, $role)
+    {
+        return $query->where('role', $role);
+    }
+
+    /**
+     * Check if the user is an administrator.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if the user is active.
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->is_active;
+    }
 }

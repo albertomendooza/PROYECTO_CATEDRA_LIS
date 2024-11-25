@@ -5,7 +5,7 @@
     <div class="col-md-6">
         <div class="card shadow-sm border-0" style="background-color: #f8f9fa;">
             <div class="card-header text-center bg-dark text-white">
-                <h4>Registro de Usuario</h4>
+                <h4>Registrar Nuevo Usuario</h4>
             </div>
             <div class="card-body">
                 <!-- Mensajes de validación -->
@@ -19,17 +19,17 @@
                     </div>
                 @endif
 
-                <!-- Formulario de Registro -->
-                <form method="POST" action="{{ route('register') }}">
+                <!-- Formulario de registro -->
+                <form method="POST" action="{{ isset($isAdmin) && $isAdmin ? route('admin.register') : route('register.store') }}">
                     @csrf
 
                     <!-- Campo de nombre -->
                     <div class="form-group mb-3">
                         <label for="name" class="text-dark">Nombre</label>
-                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required autofocus>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
                     </div>
 
-                    <!-- Campo de correo electrónico -->
+                    <!-- Campo de correo -->
                     <div class="form-group mb-3">
                         <label for="email" class="text-dark">Correo Electrónico</label>
                         <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
@@ -47,19 +47,24 @@
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
                     </div>
 
-                   <!-- Campo de rol (lista desplegable) -->
-<div class="form-group mb-3">
-    <label for="role" class="text-dark">Rol</label>
-    <select name="role" id="role" class="form-control" required>
-        <option value="cliente">Cliente</option> <!-- Usuario corresponde a cliente -->
-        <option value="empresa">Empresa</option> <!-- Empresa se mantiene igual -->
-        <option value="admin">Administrador</option> <!-- Administrador se mantiene igual -->
-    </select>
-</div>
+                    <!-- Campo de rol -->
+                    <div class="form-group mb-3">
+                        <label for="role" class="text-dark">Rol</label>
+                        <select name="role" id="role" class="form-control" required>
+                            @if(isset($isAdmin) && $isAdmin)
+                                <option value="admin">Administrador</option>
+                                <option value="empresa">Empresa</option>
+                                <option value="cliente">Cliente</option>
+                            @else
+                                <option value="empresa">Empresa</option>
+                                <option value="cliente">Cliente</option>
+                            @endif
+                        </select>
+                    </div>
 
-                    <!-- Botón de registro -->
+                    <!-- Botón de envío -->
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-dark">Registrarse</button>
+                        <button type="submit" class="btn btn-dark">Registrar Usuario</button>
                     </div>
                 </form>
             </div>
