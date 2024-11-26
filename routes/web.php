@@ -42,7 +42,6 @@ Route::middleware(['auth', 'role:empresa'])->group(function () {
 // Rutas para el carrito de compras accesibles solo para clientes
 Route::middleware(['auth', 'role:cliente'])->group(function () {
     Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index'); // Ver carrito
-    Route::post('/carrito/agregar/{id}', [CarritoController::class, 'agregar'])->name('carrito.agregar'); // Agregar al carrito
     Route::patch('/carrito/actualizar/{id}', [CarritoController::class, 'actualizar'])->name('carrito.actualizar'); // Actualizar cantidad en el carrito
     Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar'); // Eliminar del carrito
     Route::get('/carrito/pagar', [CarritoController::class, 'pagar'])->name('carrito.pagar'); // Pasarela de pago
