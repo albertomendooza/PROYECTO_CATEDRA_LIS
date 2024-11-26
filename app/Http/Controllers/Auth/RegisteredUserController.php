@@ -34,33 +34,41 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar el registro estándar
+        // Validar los datos
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'in:cliente,empresa'], // Restringir roles en el registro estándar
         ]);
-
+    
+        // Determinar valores para campos según el rol
+        $isApproved = $request->role === 'cliente' ? true : false; // Cliente aprobado automáticamente
+        $isActive = $request->role === 'cliente' ? true : false;   // Cliente activo automáticamente
+    
         // Crear el usuario con los datos validados
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role, // Solo cliente o empresa permitido
-            'is_active' => false, // Los nuevos usuarios no estarán activos por defecto
-            'approved' => false, // Los usuarios necesitan aprobación
+            'role' => $request->role,
+            'is_active' => $isActive, // Clientes activos por defecto
+            'approved' => $isApproved, // Clientes aprobados por defecto
         ]);
-
-        // Disparar el evento de registro
+    
+        // Disparar el evento de registro (opcional)
         event(new Registered($user));
-
-        // Loguear al usuario recién registrado
-        Auth::login($user);
-
-        // Redirigir al usuario a la página principal
-        return redirect(RouteServiceProvider::HOME);
+    
+        // Mensaje según el tipo de usuario
+        $message = $request->role === 'empresa'
+            ? 'Tu cuenta se ha registrado correctamente. Por favor, espera la aprobación del administrador.'
+            : 'Tu cuenta se ha registrado correctamente. Ahora puedes iniciar sesión.';
+    
+        // Redirigir al login con el mensaje correcto
+        return redirect('/login')->with('status', $message);
     }
+    
+
 
     /**
      * Display the admin registration view.

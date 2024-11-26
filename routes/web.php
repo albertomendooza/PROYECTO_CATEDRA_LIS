@@ -14,13 +14,14 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Rutas del Dashboard (requiere autenticación)
-Route::prefix('dashboard')->middleware('auth')->group(function () {
+// Rutas del Dashboard (solo accesibles para administradores)
+Route::prefix('dashboard')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/approvals', [DashboardController::class, 'approvals'])->name('dashboard.approvals');
     Route::patch('/approve/{id}', [DashboardController::class, 'approveUser'])->name('dashboard.approve');
     Route::delete('/reject/{id}', [DashboardController::class, 'rejectUser'])->name('dashboard.reject');
 });
+
 
 // Rutas públicas para el registro de usuarios (clientes y empresas)
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -35,3 +36,4 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 // Rutas para gestión de cupones
 Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
 Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
+

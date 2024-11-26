@@ -22,9 +22,14 @@ class DashboardController extends Controller
      * Muestra la vista principal del dashboard.
      */
     public function index()
-    {
-        return view('dashboard'); // Asegúrate de que esta vista existe
-    }
+{
+    // Obtén los usuarios pendientes de aprobación
+    $pendingUsers = User::where('approved', false)->get();
+
+    // Pasa la variable a la vista
+    return view('dashboard', compact('pendingUsers'));
+}
+
 
     /**
      * Muestra los usuarios pendientes de aprobación.
@@ -43,18 +48,19 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function approveUser($id)
-    {
-        $user = User::findOrFail($id);
+{
+    $user = User::findOrFail($id); // Busca el usuario por ID
 
-        if ($user->approved) {
-            return redirect()->route('dashboard.approvals')->with('warning', 'El usuario ya está aprobado.');
-        }
-
-        $user->approved = true;
-        $user->save();
-
-        return redirect()->route('dashboard.approvals')->with('success', 'Usuario aprobado exitosamente.');
+    if ($user->approved) {
+        return response()->json(['message' => 'El usuario ya está aprobado.'], 200);
     }
+
+    $user->approved = true; // Cambia el estado de aprobación
+    $user->save(); // Guarda los cambios en la base de datos
+
+    return response()->json(['message' => 'Usuario aprobado exitosamente.'], 200);
+}
+
 
     /**
      * Rechaza (elimina) a un usuario pendiente.
