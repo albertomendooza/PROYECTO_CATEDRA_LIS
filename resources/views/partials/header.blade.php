@@ -6,34 +6,48 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <!-- Enlace visible para todos los usuarios (registrados o no) -->
-                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Inicio</a></li>
-                
-                <!-- Enlaces visibles solo para usuarios no autenticados -->
+                <!-- Enlace visible para todos los usuarios -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">Inicio</a>
+                </li>
+
+                <!-- Opciones para usuarios no autenticados -->
                 @guest
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrar</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Registrar</a>
+                    </li>
                 @endguest
 
-                <!-- Enlaces visibles solo para usuarios autenticados -->
+                <!-- Opciones para usuarios autenticados -->
                 @auth
-                    <!-- Opciones para administradores -->
+                    <!-- Opciones para Administradores -->
                     @if(auth()->user()->role === 'admin')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.register') }}">Registrar Usuarios</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.register') }}">Registrar Usuarios</a>
+                        </li>
                     @endif
 
-                    <!-- Opciones para empresas -->
+                    <!-- Opciones para Empresas -->
                     @if(auth()->user()->role === 'empresa')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registro de Cupones</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('offers.create') }}">Gestión de Cupones</a>
+                        </li>
                     @endif
 
-                    <!-- Opciones para clientes -->
+                    <!-- Opciones para Clientes -->
                     @if(auth()->user()->role === 'cliente')
-                        <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li> <!-- Actualiza con la ruta correcta cuando esté disponible -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('carrito.index') }}">Carrito</a>
+                        </li>
                     @endif
 
-                    <!-- Enlace para cerrar sesión (visible para todos los roles autenticados) -->
+                    <!-- Enlace para cerrar sesión -->
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf

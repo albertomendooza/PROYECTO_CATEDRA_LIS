@@ -60,6 +60,15 @@ class User extends Authenticatable
     }
 
     /**
+ * Relación: Un usuario (empresa) puede tener muchas ofertas.
+ */
+public function offers()
+{
+    return $this->hasMany(Offer::class, 'EmpresaID');
+}
+
+
+    /**
      * Check if the user is an administrator.
      *
      * @return bool
