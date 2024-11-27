@@ -26,6 +26,8 @@ class Offer extends Model
         'CantidadCupones',
         'Descripción',
         'Estado',
+        'Imagen',
+        'categoria',
     ];
 
     public $timestamps = true; // Manejo automático de created_at y updated_at
